@@ -2,12 +2,14 @@ from rest_framework.exceptions import NotFound
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from core.payment.models import Cart
+from core.payment.models import Cart, Order, OrderItem
 from core.utils.response_codes import GeneralCodes
 from core.payment.serializers import (
     CartSerializer,
     AddToCartInputSerializer,
-    UpdateItemQuantitySerializer
+    UpdateItemQuantitySerializer,
+    OrderInputSerilaizer,
+    OrderDetailSerializer
 )
 
 
@@ -122,6 +124,45 @@ class CartView(viewsets.GenericViewSet):
         return Response(
             {
                 'code': GeneralCodes.SUCCESS
+            },
+            status=status.HTTP_200_OK
+        )
+
+    @action(
+        methods=['POST'],
+        detail=False
+    )
+    def checkout(self, request, *args, **kwargs):
+        """Create Order"""
+        serializer = OrderInputSerilaizer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # get state and city data from validated_data
+        state = serializer.validated_data['state']
+        city = serializer.validated_data['city']
+        # create order
+        cart = self.get_object()
+        order = Order.objects.create(
+            user=request.user,
+            total=cart.total,
+            state=state,
+            city=city
+        )
+        # add order items
+        for item in cart.items.select_related('product'):
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                price=item.product.price
+            )
+        # clear all products from cart
+        cart.clear()
+        # return all data about the order
+        order_detail_serializer = OrderDetailSerializer(order)
+        return Response(
+            {
+                'code': GeneralCodes.SUCCESS,
+                'data': order_detail_serializer.data
             },
             status=status.HTTP_200_OK
         )
