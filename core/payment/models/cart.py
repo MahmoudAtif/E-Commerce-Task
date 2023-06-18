@@ -1,5 +1,6 @@
 from typing import Any
 from django.db import models
+from django.db.models.aggregates import Sum
 from django.db.models.functions import Coalesce
 from core.utils.utils_models import AbstractModel
 from django.utils.translation import gettext_lazy as _
@@ -37,7 +38,7 @@ class Cart(AbstractModel):
 
         total = self.items.aggregate(
             sum=Coalesce(
-                models.Sum('product__price'),
+                Sum(models.F('product__price') * models.F('quantity')),
                 0,
                 output_field=models.DecimalField(
                     max_digits=8,
@@ -58,3 +59,21 @@ class Cart(AbstractModel):
         self.items.all().delete()
         self.save()
         return True
+
+    def add_item(self, product, quantity: int):
+        item = self.items.create(
+            product=product,
+            quantity=quantity
+        )
+        return item
+
+    @property
+    def get_total_items(self):
+        total = self.items.aggregate(
+            sum=Coalesce(
+                Sum(models.F('quantity')),
+                0,
+                output_field=models.IntegerField()
+            ),
+        )['sum']
+        return total

@@ -31,3 +31,8 @@ class CartItem(AbstractModel):
 
     def __str__(self) -> str:
         return f'{self.cart} | {self.product}'
+
+    def update_quantity(self, quantity: int):
+        self.quantity = quantity
+        self.save()
+        return True
