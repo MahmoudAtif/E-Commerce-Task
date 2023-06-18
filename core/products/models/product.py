@@ -11,7 +11,7 @@ class Product(AbstractModel):
         decimal_places=2
     )
     status = models.BooleanField(verbose_name=_('Status'), default=True)
-
+    
     class Meta:
         db_table = 'products_product'
         verbose_name = _('Product')
