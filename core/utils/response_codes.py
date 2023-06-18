@@ -1,11 +1,11 @@
 
 
-def build_code(prefix, base_num, code, model_perfix=None):
+def build_code(prefix, base_num, code, model_prefix=None):
     """Generate Codes"""
     NONE_MODEL_PERFIX = 'GE'
     return "{0}{1}{2}{3}".format(
         prefix,
-        model_perfix or NONE_MODEL_PERFIX,
+        model_prefix or NONE_MODEL_PERFIX,
         base_num,
         code
     )
@@ -27,6 +27,25 @@ class GeneralCodes:
     SUCCESS = build_code(prefix=PREFIX, base_num=BASE_NUM, code='0')
     INVALID_DATA = build_code(prefix=PREFIX, base_num=BASE_NUM, code='1')
     NOT_FOUND = build_code(prefix=PREFIX, base_num=BASE_NUM, code='2')
+
+
+class UserCodes:
+
+    PREFIX = "US"
+    BASE_NUM = 2
+
+    INVALID_CREDENTIALS = build_code(
+        prefix=PREFIX,
+        base_num=BASE_NUM,
+        code='0',
+        model_prefix='US'
+    )
+    PASSWORD_NOT_MATCH = build_code(
+        prefix=PREFIX,
+        base_num=BASE_NUM,
+        code='1',
+        model_prefix='US'
+    )
 
 
 def response_codes():

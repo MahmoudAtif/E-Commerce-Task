@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # Thrd  Party
     'rest_framework',
+    'rest_framework_simplejwt',
 
     # apps
     "core"
