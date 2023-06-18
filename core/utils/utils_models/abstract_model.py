@@ -13,4 +13,4 @@ class AbstractModel(models.Model):
     )
 
     class Meta:
-        absrtact = True
+        abstract = True
