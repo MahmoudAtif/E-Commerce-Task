@@ -5,6 +5,7 @@ from core.payment import views
 
 router = DefaultRouter()
 router.register('cart', views.CartView, basename='cart')
+router.register('orders', views.OrderViewset, basename='orders')
 
 
 urlpatterns = [

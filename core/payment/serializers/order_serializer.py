@@ -5,9 +5,10 @@ from .order_item_serializer import OrderItemSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
     """Order Serializer"""
+
     class Meta:
         model = Order
-        fields = '__all__'
+        exclude = ['user']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -22,7 +23,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = '__all__'
+        exclude = ['user']
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
