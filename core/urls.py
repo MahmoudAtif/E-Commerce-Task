@@ -19,6 +19,7 @@ from django.urls import path, include
 from core.users import urls as users_urls
 from core.products import urls as products_urls
 from core.payment import urls as payment_urls
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
 urlpatterns = [
@@ -26,4 +27,11 @@ urlpatterns = [
     path('api/users/', include((users_urls, 'users'))),
     path('api/products/', include((products_urls, 'products'))),
     path('api/payment/', include((payment_urls, 'payment'))),
+    # swagger
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path(
+        'swagger/',
+        SpectacularSwaggerView.as_view(url_name='schema'),
+        name='swagger-ui'
+    ),
 ]
