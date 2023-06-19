@@ -55,7 +55,8 @@ def response_codes():
     ]
     classes = [
         ServerCodes,
-        GeneralCodes
+        GeneralCodes,
+        UserCodes
     ]
     all_codes = []
 
