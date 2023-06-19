@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from core.users.models import User
-from core.utils.response_codes import UserCodes, GeneralCodes
+from core.utils.response_codes import UserCodes
 from django.contrib.auth import authenticate
 
 

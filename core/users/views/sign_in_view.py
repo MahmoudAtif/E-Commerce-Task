@@ -1,9 +1,8 @@
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from core.users.models import User
 from core.users.serializers import SignInSerializer
-from core.utils.response_codes import UserCodes, GeneralCodes
+from core.utils.response_codes import GeneralCodes
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
