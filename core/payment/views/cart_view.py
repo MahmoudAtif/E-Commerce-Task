@@ -11,6 +11,7 @@ from core.payment.serializers import (
     OrderInputSerilaizer,
     OrderDetailSerializer
 )
+from drf_spectacular.utils import extend_schema
 
 
 class CartView(viewsets.GenericViewSet):
@@ -32,6 +33,9 @@ class CartView(viewsets.GenericViewSet):
             status=status.HTTP_200_OK
         )
 
+    @extend_schema(
+        request=AddToCartInputSerializer
+    )
     @action(
         methods=['POST'],
         detail=False
@@ -87,6 +91,9 @@ class CartView(viewsets.GenericViewSet):
             status=status.HTTP_200_OK
         )
 
+    @extend_schema(
+        request=UpdateItemQuantitySerializer
+    )
     @action(
         methods={'POST'},
         detail=False,
@@ -128,6 +135,9 @@ class CartView(viewsets.GenericViewSet):
             status=status.HTTP_200_OK
         )
 
+    @extend_schema(
+        request=OrderInputSerilaizer
+    )
     @action(
         methods=['POST'],
         detail=False
