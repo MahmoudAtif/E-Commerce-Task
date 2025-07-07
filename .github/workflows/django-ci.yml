@@ -32,6 +32,7 @@ jobs:
       DATABASE_PASSWORD: hms
       DATABASE_HOST: localhost
       DATABASE_PORT: 5432
+      SECRET_KEY: sfgdfgdfgdf
 
     steps:
       - name: Checkout repository
