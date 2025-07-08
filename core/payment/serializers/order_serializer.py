@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from core.payment.models import Order
+
 from .order_item_serializer import OrderItemSerializer
 
 
@@ -8,11 +10,11 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        exclude = ['user']
+        exclude = ["user"]
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['status'] = Order.StatusEnum(instance.status).label
+        rep["status"] = Order.StatusEnum(instance.status).label
         return rep
 
 
@@ -23,9 +25,9 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        exclude = ['user']
+        exclude = ["user"]
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['status'] = Order.StatusEnum(instance.status).label
+        rep["status"] = Order.StatusEnum(instance.status).label
         return rep
